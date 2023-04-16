@@ -1,15 +1,17 @@
 ---
-title: Hello, world.
+title: The L5R Wiki.
 date: Last Modified 
 permalink: /
 eleventyNavigation:
   key: Hello 
   order: 0
-  title: Hello, world.
+  title: The L5R Wiki.
 ---
-You have successfully launched your spacebook. If you are new here, you may want to [read the docs](https://spacebook.app/) for tips and tricks on setting up your project.
 
-![Hello, world](/content/images/hello.jpg)
+This Wiki exists to make a central repository for all things L5R. It is a work in progress, and will be updated as time allows.
+
+It also allows players to surface what is currently being talked about on this page: [current topics](/current-topics/)
+
 
 ->*Onward...*<-
 

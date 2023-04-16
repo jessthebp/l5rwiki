@@ -15,7 +15,8 @@ section: page
     </div>
     {% endif %}
 {% endif %}
- 
+<button id="current-topic-button">Submit current topic</button>
+
 <div class="flex w-full justify-center">
     <div class="mt-4 px-6 md:px-6 lg:px-8 xl:px-12 w-full max-w-5xl">
         <div class="wrapper flex justify-between">
@@ -72,3 +73,16 @@ section: page
 </div>
    
 
+<script>
+
+const currentTopicButton = document.querySelector('#current-topic-button')
+currentTopicButton.addEventListener('click', async () => {
+  const response = await fetch('/.netlify/functions/current-topic', {
+    method: 'POST',
+    body: JSON.stringify({ url: window.location.href }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+})
+</script>
