@@ -21,18 +21,17 @@ const currentTopic = document.querySelector('#current-topic');
 const previousTopics = document.querySelector('#previous-topics');
 
 async function updateCurrentTopic() {
- const response = await fetch('/./netlify/edge-functions/current-topic/current-topic.js');
-
+  const response = await fetch('/netlify/functions/current-topic');
   const { url, timestamp } = await response.json();
- const date = new Date(timestamp).toLocaleString();
+  const date = new Date(timestamp).toLocaleString();
   currentTopic.innerHTML = `<a href="${url}">${url}</a> (as of ${date})`;
-
   const previousTopic = document.createElement('li');
   previousTopic.innerHTML = `<a href="${url}">${url}</a> (as of ${date})`;
-  previousTopics.prepend(previousTopic)
+  previousTopics.prepend(previousTopic);
 }
-updateCurrentTopic();
 
-setInterval(updateCurrentTopic, 5000)
+updateCurrentTopic();
+setInterval(updateCurrentTopic, 30000);
+
 
 </script>
