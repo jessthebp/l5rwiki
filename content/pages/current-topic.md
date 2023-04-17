@@ -21,17 +21,25 @@ const currentTopic = document.querySelector('#current-topic');
 const previousTopics = document.querySelector('#previous-topics');
 
 async function updateCurrentTopic() {
-  const response = await fetch('/netlify/edge-functions/current-topic');
-  const { url, timestamp } = await response.json();
-  const date = new Date(timestamp).toLocaleString();
+  const response = await fetch('/admin/data.csv');
+  const text = await response.text();
+  const entries = text.trim().split('\n').slice(-5).reverse();
+
+  const [latestEntry] = entries;
+  const [url, timestamp] = latestEntry.split(',');
+  const date = new Date(Number(timestamp)).toLocaleString();
   currentTopic.innerHTML = `<a href="${url}">${url}</a> (as of ${date})`;
-  const previousTopic = document.createElement('li');
-  previousTopic.innerHTML = `<a href="${url}">${url}</a> (as of ${date})`;
-  previousTopics.prepend(previousTopic);
+
+  const previousTopicList = entries.slice(1);
+  for (const entry of previousTopicList) {
+    const [url, timestamp] = entry.split(',');
+    const date = new Date(Number(timestamp)).toLocaleString();
+    const previousTopic = document.createElement('li');
+    previousTopic.innerHTML = `<a href="${url}">${url}</a> (as of ${date})`;
+    previousTopics.appendChild(previousTopic);
+  }
 }
 
 updateCurrentTopic();
 setInterval(updateCurrentTopic, 30000);
-
-
 </script>

@@ -74,7 +74,6 @@ section: page
    
 
 <script>
-
 const currentTopicButton = document.querySelector('#current-topic-button');
 currentTopicButton.addEventListener('click', async () => {
   const response = await fetch('/netlify/edge-functions/current-topic/', {
@@ -85,9 +84,19 @@ currentTopicButton.addEventListener('click', async () => {
     headers: {
       'Content-Type': 'application/json'
     }
-  })
-  console.log(response)
-  ;
+  });
+  const { url, timestamp } = await response.json();
+  const date = new Date(timestamp).toLocaleString();
+  const csvData = `"${url}", "${date}"\n`;
+
+  await fetch('/admin/data.csv', {
+    method: 'POST',
+    body: csvData,
+    headers: {
+      'Content-Type': 'text/csv'
+    }
+  });
 });
+
 
 </script>
