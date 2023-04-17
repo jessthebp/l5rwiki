@@ -21,7 +21,7 @@ const currentTopic = document.querySelector('#current-topic');
 const previousTopics = document.querySelector('#previous-topics');
 
 async function updateCurrentTopic() {
-  const response = await fetch('/netlify/functions/current-topic');
+  const response = await fetch('/netlify/edge-functions/current-topic');
   const { url, timestamp } = await response.json();
   const date = new Date(timestamp).toLocaleString();
   currentTopic.innerHTML = `<a href="${url}">${url}</a> (as of ${date})`;
